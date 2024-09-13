@@ -11,4 +11,14 @@ variable "qa_vpc_cidr" {
 variable "disable_sub" {
   type = bool
   default = false
-  }
+ }
+
+ variable "use2a" {
+   type = string
+   default = "us-east-2a"
+ }
+
+  variable "use2b" {
+   type = string
+   default = "us-east-2b"
+ }
