@@ -38,10 +38,10 @@ resource "aws_security_group" "pub_sg" {
 #
 #
 ######################### Bastion Security Group #######################
-resource "aws_security_group" "Bastion_sg" {
+resource "aws_security_group" "bastion_sg" {
   name   = "bastion-sg"
   vpc_id = aws_vpc.staging.id
-
+  
   ingress {
     from_port        = 22
     to_port          = 22
@@ -91,7 +91,7 @@ resource "aws_security_group" "private_sg" {
     from_port       = 22
     to_port         = 22
     protocol        = "tcp"
-    security_groups = [aws_security_group.bastion.id]
+    security_groups = [aws_security_group.bastion_sg.id]
   }
 
 
