@@ -10,12 +10,13 @@ resource "aws_route_table" "pub_rtr" {
     Name = "public-rtr"
   }
 
-  resource "aws_route_table_association" "a" {
-    subnet_id      = aws_subnet.foo.id
-    route_table_id = aws_route_table.bar.id
+  resource "aws_route_table_association" "pub_sub_1" {
+    subnet_id      = aws_subnet.staging_pub_1.id
+    route_table_id = aws_route_table.pub_rtr.id
   }
-  resource "aws_route_table_association" "a" {
-    subnet_id      = aws_subnet.foo.id
-    route_table_id = aws_route_table.bar.id
+
+  resource "aws_route_table_association" "pub_sub_2" {
+    subnet_id      = aws_subnet.staging_pub_2.id
+    route_table_id = aws_route_table.pub_rtr.id
   }
 }
