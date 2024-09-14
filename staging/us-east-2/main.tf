@@ -2,7 +2,7 @@
 resource "aws_vpc" "staging" {
   cidr_block = var.staging_vpc_cidr
   tags = {
-    name = "staging"
+    name        = "staging"
     environment = "staging"
   }
 }
@@ -29,6 +29,6 @@ resource "aws_nat_gateway" "staging" {
 }
 
 resource "aws_eip" "natgw_eip" {
-    domain   = "vpc"
-    depends_on = [aws_internet_gateway.staging]
+  domain     = "vpc"
+  depends_on = [aws_internet_gateway.staging]
 }
