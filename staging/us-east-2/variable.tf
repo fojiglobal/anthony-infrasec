@@ -22,3 +22,8 @@ variable "use2b" {
   type    = string
   default = "us-east-2b"
 }
+
+variable "staging_env" {
+  type    = string
+  default = "staging"
+}

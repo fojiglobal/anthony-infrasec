@@ -41,7 +41,7 @@ resource "aws_security_group" "pub_sg" {
 resource "aws_security_group" "bastion_sg" {
   name   = "bastion-sg"
   vpc_id = aws_vpc.staging.id
-  
+
   ingress {
     from_port        = 22
     to_port          = 22
