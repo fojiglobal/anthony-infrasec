@@ -1,8 +1,3 @@
-variable "cidr_block" {
-  type    = string
-  default = "10.50.0.o/16"
-}
-
 variable "enable_dns" {
   type    = bool
   default = false
@@ -14,7 +9,6 @@ variable "public_subnets" {
     tags             = map(string)
     azs              = string
     enable_public_ip = bool
-
   }))
 }
 
@@ -23,8 +17,6 @@ variable "public_subnets" {
     cidr             = string
     tags             = map(string)
     azs              = string
-    enable_public_ip = bool
-
   }))
 }
 
