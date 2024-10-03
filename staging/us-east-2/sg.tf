@@ -2,6 +2,7 @@
 resource "aws_security_group" "pub_sg" {
   # ... other configuration ...
   name   = "public-sg"
+  description = "Security group for public instances"
   vpc_id = aws_vpc.staging.id
   ingress {
     from_port        = 80
@@ -40,6 +41,7 @@ resource "aws_security_group" "pub_sg" {
 ######################### Bastion Security Group #######################
 resource "aws_security_group" "bastion_sg" {
   name   = "bastion-sg"
+  description = "Security group for bastion instances"
   vpc_id = aws_vpc.staging.id
 
   ingress {
@@ -71,6 +73,7 @@ resource "aws_security_group" "bastion_sg" {
 ######################### private Security Group #######################
 resource "aws_security_group" "private_sg" {
   name   = "private-sg"
+  description = "Security group for private instances"
   vpc_id = aws_vpc.staging.id
 
   ingress {
