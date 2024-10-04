@@ -6,9 +6,10 @@ terraform {
     }
   }
   backend "s3" {
-    bucket = "anthony-cs2-terraform"
-    key    = "staging/terraform.tfstate"
-    region = "us-east-2"
+    bucket         = "anthony-cs2-terraform"
+    key            = "staging/terraform.tfstate"
+    region         = "us-east-2"
+    dynamodb_table = "cs2-infrasec-tf"
   }
 }
 # Configure the AWS Provider
