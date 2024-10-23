@@ -1,6 +1,6 @@
 # Define the staging module with various configurations
 module "staging" {
-  source             = "./modules"                # Path to the module source
+  source             = "github.com/fojiglobal/anthony-tf-modules//staging?ref=1.1.0" #"./modules"                # Path to the module source
   vpc_cidr           = local.vpc_cidr             # VPC CIDR block
   env                = local.env                  # Environment name
   public_subnets     = local.public_subnets       # List of public subnets
