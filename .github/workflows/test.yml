@@ -120,7 +120,7 @@ jobs:
       #     date
       #     cat /etc/os-release
 
-  deploy:
+  tfapply:
     # The type of runner that the job will run on
     needs: tfplan
     runs-on: ubuntu-latest
