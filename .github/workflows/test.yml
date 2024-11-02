@@ -133,7 +133,7 @@ jobs:
   # The job uses the latest Ubuntu runner.
   tfapply:
       if: github.event_name == 'push'
-      #needs: terraform-snyk-scan
+      needs: terraform-snyk-scan
       runs-on: ubuntu-latest
       steps:
         - uses: actions/checkout@v4
