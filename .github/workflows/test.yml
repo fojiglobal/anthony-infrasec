@@ -123,6 +123,8 @@ jobs:
           uses: snyk/actions/iac@master
           env:
             SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+          with:
+            file: './qa/us-east-2'
        
   # This job applies the Terraform configuration.
   # It runs only on push events and after the 'terraform-snyk-scan' job.
