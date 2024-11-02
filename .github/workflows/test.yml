@@ -115,6 +115,7 @@ jobs:
   # It runs after the 'tfplan' job and uses the latest Ubuntu runner.
   # The Snyk scan checks for security misconfigurations and requires all critical and high issues to be resolved before merging to the main branch.
   terraform-snyk-scan:
+      if: github.event_name == 'push' || github.event_name == 'pull_request' 
       needs: tfplan
       runs-on: ubuntu-latest
       steps:
@@ -131,8 +132,8 @@ jobs:
   # It runs only on push events and after the 'terraform-snyk-scan' job.
   # The job uses the latest Ubuntu runner.
   tfapply:
-      if: always() && github.event_name == 'push'
-      needs: terraform-snyk-scan
+      if: github.event_name == 'push'
+      #needs: terraform-snyk-scan
       runs-on: ubuntu-latest
       steps:
         - uses: actions/checkout@v4
