@@ -110,24 +110,29 @@ jobs:
                 body: output
               })
             }
-
-      # Runs a single command using the runners shell
-      # - name: GHA Terraform
-      #   run: echo "Welcome to my GHA Terraform Test"
-
-      # # Runs a set of commands using the runners shell
-      # - name: Display Date and Time
-      #   run: |
-      #     date
-      #     cat /etc/os-release
-
+      
+  # This job performs a security scan on the Terraform code using Snyk.
+  # It runs after the 'tfplan' job and uses the latest Ubuntu runner.
+  # The Snyk scan checks for security misconfigurations and requires all critical and high issues to be resolved before merging to the main branch.
+  terraform-snyk-scan:
+      needs: tfplan
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v2
+        - name: Scan Terraform Code for Security Misconfigurations. Resolve All Critical and High Issues before Merging to Main
+          uses: snyk/actions/iac@master
+          env:
+            SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+       
+  # This job applies the Terraform configuration.
+  # It runs only on push events and after the 'terraform-snyk-scan' job.
+  # The job uses the latest Ubuntu runner.
   tfapply:
-    if: github.event_name == 'push'
-    # The type of runner that the job will run on
-    needs: tfplan
-    runs-on: ubuntu-latest
-    steps: 
-      - uses: actions/checkout@v4
-      - name: Deploy Terraform
-        run: echo "Terraform Apply"
+      if: github.event_name == 'push'
+      needs: terraform-snyk-scan
+      runs-on: ubuntu-latest
+      steps: 
+        - uses: actions/checkout@v4
+        - name: Deploy Terraform
+          run: echo "Terraform Apply"
         
