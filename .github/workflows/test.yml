@@ -135,7 +135,6 @@ jobs:
   # The job uses the latest Ubuntu runner.
   terraform-snyk-post-scan:
       if: github.event_name == 'push'
-      needs: tfplan
       runs-on: ubuntu-latest
       steps:
         - uses: actions/checkout@v2
