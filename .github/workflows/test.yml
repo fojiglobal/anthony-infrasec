@@ -130,10 +130,10 @@ jobs:
   # It runs only on push events and after the 'terraform-snyk-scan' job.
   # The job uses the latest Ubuntu runner.
   tfapply:
-      if: github.event_name == 'push'
+      if: always() && github.event_name == 'push'
       needs: terraform-snyk-scan
       runs-on: ubuntu-latest
-      steps: 
+      steps:
         - uses: actions/checkout@v4
         - name: Deploy Terraform
           run: echo "Terraform Apply"
