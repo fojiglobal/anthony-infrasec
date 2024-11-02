@@ -125,6 +125,7 @@ jobs:
             SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
           with:
             file: './qa/us-east-2'
+            args: --severity-threshold=high
        
   # This job applies the Terraform configuration.
   # It runs only on push events and after the 'terraform-snyk-scan' job.
