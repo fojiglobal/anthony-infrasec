@@ -111,12 +111,30 @@ jobs:
               })
             }
       
-  # This job performs a security scan on the Terraform code using Snyk.
-  # It runs after the 'tfplan' job and uses the latest Ubuntu runner.
-  # The Snyk scan checks for security misconfigurations and requires all critical and high issues to be resolved before merging to the main branch.
-  terraform-snyk-scan:
-      if: github.event_name == 'push' || github.event_name == 'pull_request' 
+ 
+  # This job performs a pre-scan on the Terraform code using Snyk.
+  # It runs only on pull request events and after the 'tfplan' job.
+  # The job uses the latest Ubuntu runner.
+  terraform-snyk-pre-scan:
+      if: github.event_name == 'pull_request'
       needs: tfplan
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v2
+        - name: Scan Terraform Code for Security Misconfigurations. Resolve All Critical and High Issues before Merging to Main
+          uses: snyk/actions/iac@master
+          env:
+            SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+          with:
+            file: './qa/us-east-2'
+            args: --severity-threshold=high
+
+ 
+  # This job performs a post-scan on the Terraform code using Snyk.
+  # It runs only on push events and after the 'tfplan' job.
+  # The job uses the latest Ubuntu runner.
+  terraform-snyk-post-scan:
+      if: github.event_name == 'push'
       runs-on: ubuntu-latest
       steps:
         - uses: actions/checkout@v2
@@ -129,11 +147,11 @@ jobs:
             args: --severity-threshold=high
        
   # This job applies the Terraform configuration.
-  # It runs only on push events and after the 'terraform-snyk-scan' job.
+  # It runs only on push events and after the 'terraform-snyk-post-scan' job.
   # The job uses the latest Ubuntu runner.
   tfapply:
       if: github.event_name == 'push'
-      needs: terraform-snyk-scan
+      needs: terraform-snyk-post-scan
       runs-on: ubuntu-latest
       steps:
         - uses: actions/checkout@v4
