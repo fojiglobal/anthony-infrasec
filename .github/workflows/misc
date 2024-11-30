@@ -1,1 +1,0 @@
-This PR will be used to sets up a GitHub Action workflow to check Terraform configuration. The steps include formatting, initializing, validating, and planning Terraform files. Additionally, it updates or creates a comment on pull requests with the results of these checks and the Terraform plan. This will also add Snyk Scanning for Terraform codes
